@@ -1,15 +1,35 @@
 import React from "react";
 import { useState, useEffect } from "react";
-export const Form = () => {
+export const Form = ({ patients, setPatients }) => {
   const [name, setName] = useState("");
   const [owner, setOwner] = useState("");
   const [email, setEmail] = useState("");
   const [discharged, setDischarged] = useState("");
   const [symptoms, setSymptoms] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Formulario enviado");
+    if ([name, owner, email, discharged, symptoms].includes("")) {
+      console.log("Todos los campos son obligatorios");
+      setError(true);
+      return;
+    }
+    setError(false);
+    const objPatient = {
+      name,
+      owner,
+      email,
+      discharged,
+      symptoms,
+    };
+    setPatients([...patients, objPatient]);
+    setName("");
+    setOwner("");
+    setEmail("");
+    setDischarged("");
+    setSymptoms("");
   };
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-5">
@@ -24,6 +44,11 @@ export const Form = () => {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
       >
+        {error && (
+          <div className="bg-red-800 text-center text-white p-3 uppercase font-bold mb-3 rounded-md">
+            <p>Todos los campos son obligatorios</p>
+          </div>
+        )}
         <div className="mb-5">
           <label
             htmlFor="pet"
