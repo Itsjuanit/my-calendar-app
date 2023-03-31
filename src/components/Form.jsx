@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Error } from "./Error";
 
-export const Form = ({ patients, setPatients, patient }) => {
+export const Form = ({ patients, setPatients, patient, setPatient }) => {
   const [name, setName] = useState("");
   const [owner, setOwner] = useState("");
   const [email, setEmail] = useState("");
@@ -37,15 +37,27 @@ export const Form = ({ patients, setPatients, patient }) => {
       return;
     }
     setError(false);
+
     const objPatient = {
       name,
       owner,
       email,
       discharged,
       symptoms,
-      id: generateId(),
     };
-    setPatients([...patients, objPatient]);
+
+    if (patient.id) {
+      objPatient.id = patient.id;
+      const newPatients = patients.map((patientState) =>
+        patientState.id === patient.id ? objPatient : patientState
+      );
+      setPatients(newPatients);
+      setPatient({});
+    } else {
+      objPatient.id = generateId();
+      setPatients([...patients, objPatient]);
+    }
+
     setName("");
     setOwner("");
     setEmail("");
@@ -146,9 +158,9 @@ export const Form = ({ patients, setPatients, patient }) => {
           />
         </div>
         <input
-          value="Agregar"
           type="submit"
           className="bg-indigo-600 w-full text-white uppercase font-bold hover:bg-indigo-700 p-2 rounded-md cursor-pointer"
+          value={patient.id ? "Editar paciente" : "Agregar paciente"}
         />
       </form>
     </div>
