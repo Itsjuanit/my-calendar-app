@@ -1,11 +1,9 @@
 import React from "react";
 import { Patients } from "./Patients";
 
-export const ListPatients = ({ patients, setPatient }) => {
-  console.log(patients);
-
+export const ListPatients = ({ patients, setPatient, deletePatient }) => {
   return (
-    <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll">
+    <div className="md:w-1/2 lg:w-3/5 h-[calc(100vh-4rem)] overflow-x-hidden overflow-y-auto pr-2">
       {patients && patients.length ? (
         <>
           <h2 className="font-black text-3xl text-center">ListPatients</h2>
@@ -19,6 +17,7 @@ export const ListPatients = ({ patients, setPatient }) => {
                 key={patient.id}
                 patient={patient}
                 setPatient={setPatient}
+                deletePatient={deletePatient}
               />
             );
           })}

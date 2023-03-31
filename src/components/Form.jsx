@@ -30,9 +30,7 @@ export const Form = ({ patients, setPatients, patient, setPatient }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Formulario enviado");
     if ([name, owner, email, discharged, symptoms].includes("")) {
-      console.log("Todos los campos son obligatorios");
       setError(true);
       return;
     }
@@ -54,7 +52,7 @@ export const Form = ({ patients, setPatients, patient, setPatient }) => {
       setPatients(newPatients);
       setPatient({});
     } else {
-      objPatient.id = generateId();
+      objPatient.id = Date.now();
       setPatients([...patients, objPatient]);
     }
 
