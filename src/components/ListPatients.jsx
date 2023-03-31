@@ -1,20 +1,37 @@
 import React from "react";
 import { Patients } from "./Patients";
 
-export const ListPatients = () => {
+export const ListPatients = ({ patients, setPatient }) => {
+  console.log(patients);
+
   return (
     <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll">
-      <h2 className="font-black text-3xl text-center">ListPatients</h2>
-      <p className="text-xl mt-5 mb-10 text-center">
-        Administra tus{" "}
-        <span className="text-indigo-600 font-bold">pacientes y citas</span>
-      </p>
-      <Patients />
-      <Patients />
-      <Patients />
-      <Patients />
-      <Patients />
-      <Patients />
+      {patients && patients.length ? (
+        <>
+          <h2 className="font-black text-3xl text-center">ListPatients</h2>
+          <p className="text-xl mt-5 mb-10 text-center">
+            Administra tus{" "}
+            <span className="text-indigo-600 font-bold">pacientes y citas</span>
+          </p>
+          {patients.map((patient) => {
+            return (
+              <Patients
+                key={patient.id}
+                patient={patient}
+                setPatient={setPatient}
+              />
+            );
+          })}
+        </>
+      ) : (
+        <>
+          <h2 className="font-black text-3xl text-center">No hay pacientes</h2>
+          <p className="text-xl mt-5 mb-10 text-center">
+            Comienza agregando tus{" "}
+            <span className="text-indigo-600 font-bold">pacientes y citas</span>
+          </p>
+        </>
+      )}
     </div>
   );
 };

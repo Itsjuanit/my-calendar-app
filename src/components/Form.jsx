@@ -1,12 +1,32 @@
 import React from "react";
 import { useState, useEffect } from "react";
-export const Form = ({ patients, setPatients }) => {
+import { Error } from "./Error";
+
+export const Form = ({ patients, setPatients, patient }) => {
   const [name, setName] = useState("");
   const [owner, setOwner] = useState("");
   const [email, setEmail] = useState("");
   const [discharged, setDischarged] = useState("");
   const [symptoms, setSymptoms] = useState("");
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(patient).length > 0) {
+      setName(patient.name);
+      setOwner(patient.owner);
+      setEmail(patient.email);
+      setDischarged(patient.discharged);
+      setSymptoms(patient.symptoms);
+    }
+  }, [patient]);
+
+  console.log(patient);
+
+  const generateId = () => {
+    const ramdom = Math.random().toString(36).substr(2);
+    const fecha = Date.now().toString(36);
+    return ramdom + fecha;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +43,7 @@ export const Form = ({ patients, setPatients }) => {
       email,
       discharged,
       symptoms,
+      id: generateId(),
     };
     setPatients([...patients, objPatient]);
     setName("");
@@ -44,11 +65,7 @@ export const Form = ({ patients, setPatients }) => {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
       >
-        {error && (
-          <div className="bg-red-800 text-center text-white p-3 uppercase font-bold mb-3 rounded-md">
-            <p>Todos los campos son obligatorios</p>
-          </div>
-        )}
+        {error && <Error>Todos los campos son obligatorios</Error>}
         <div className="mb-5">
           <label
             htmlFor="pet"
