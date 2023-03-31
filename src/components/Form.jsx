@@ -1,17 +1,27 @@
 import React from "react";
-
+import { useState, useEffect } from "react";
 export const Form = () => {
+  const [name, setName] = useState("");
+  const [owner, setOwner] = useState("");
+  const [email, setEmail] = useState("");
+  const [discharged, setDischarged] = useState("");
+  const [symptoms, setSymptoms] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Formulario enviado");
+  };
   return (
-    <div className="md:w-1/2 lg:w-2/5">
+    <div className="md:w-1/2 lg:w-2/5 mx-5">
       <h2 className="font-black text-3xl text-center">
         Seguimiento de Pacientes
       </h2>
-      <p className="text-lg mt-5 text-center">
+      <p className="text-xl mt-5 text-center mb-10">
         Añade pacientes y{" "}
         <span className="text-indigo-600 font-bold">aministralos.</span>
       </p>
       <form
-        action=""
+        onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
       >
         <div className="mb-5">
@@ -26,6 +36,8 @@ export const Form = () => {
             type="text"
             placeholder="Nombre"
             className="border-2 w-full p-2 mt2 placeholder-gray-400 rounded-md"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="mb-5">
@@ -40,6 +52,8 @@ export const Form = () => {
             type="text"
             placeholder="Nombre del dueño"
             className="border-2 w-full p-2 mt2 placeholder-gray-400 rounded-md"
+            value={owner}
+            onChange={(e) => setOwner(e.target.value)}
           />
         </div>
         <div className="mb-5">
@@ -54,6 +68,8 @@ export const Form = () => {
             type="email"
             placeholder="Email contacto"
             className="border-2 w-full p-2 mt2 placeholder-gray-400 rounded-md"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-5">
@@ -67,6 +83,8 @@ export const Form = () => {
             id="discharged"
             type="date"
             className="border-2 w-full p-2 mt2 placeholder-gray-400 rounded-md"
+            value={discharged}
+            onChange={(e) => setDischarged(e.target.value)}
           />
         </div>
         <div className="mb-10">
@@ -81,6 +99,8 @@ export const Form = () => {
             id="symptoms"
             className="border-2 w-full p-2 mt2 placeholder-gray-400 rounded-lg"
             placeholder="Describe los sintomas"
+            value={symptoms}
+            onChange={(e) => setSymptoms(e.target.value)}
           />
         </div>
         <input
